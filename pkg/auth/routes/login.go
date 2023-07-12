@@ -3,6 +3,7 @@ package routes
 import (
 	"context"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/stebin13/go-grpc-microservice/pkg/auth/pb"
@@ -31,6 +32,7 @@ func Login(c *gin.Context, authcli pb.AuthServiceClient) {
 		})
 		return
 	}
+	c.SetCookie("Bearer", res.Token, int(time.Now().Add(time.Hour*24).Unix()), "/", "localhost", false, true)
 	c.JSON(http.StatusOK, gin.H{
 		"Success": &res,
 	})
