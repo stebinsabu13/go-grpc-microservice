@@ -2,7 +2,6 @@ package auth
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -19,7 +18,6 @@ func InitAuthMiddleware(svc *ServiceClient) AuthMiddlewareConfig {
 
 func (c *AuthMiddlewareConfig) AuthRequired(ctx *gin.Context) {
 	authorization, er := ctx.Cookie("Bearer")
-	fmt.Println(authorization, "error:", er)
 	if er != nil {
 		ctx.AbortWithStatusJSON(http.StatusUnauthorized, er)
 		return
